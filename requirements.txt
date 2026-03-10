@@ -4,3 +4,5 @@ langchain-community
 langchain-openai
 python-dotenv
 requests
+duckduckgo-search
+ddgs

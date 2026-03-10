@@ -7,6 +7,7 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain import hub
 from langchain_core.messages import HumanMessage, AIMessage
 from tools.weather import get_weather
+from tools.search import web_search
 
 # Assuming these are your custom imports
 # from prompts import get_prompt
@@ -29,7 +30,7 @@ llm = ChatOpenAI(
 
 # 2. Tools and Prompt
 # Make sure get_weather has a @tool decorator!
-tools = [get_weather]
+tools = [get_weather,web_search]
 
 # IMPORTANT: The 'hwchase17/react' prompt expects exactly these variables:
 # 'input', 'agent_scratchpad', and 'tools'. 
