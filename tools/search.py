@@ -1,20 +1,14 @@
 from langchain.tools import tool
-from duckduckgo_search import DDGS
+from langchain_community.tools import DuckDuckGoSearchRun
 
 @tool
-def web_search(query: str) -> str:
+def web_search(query: str):
     """Search the internet for current news, sports results, and recent information."""
     
-    with DDGS() as ddgs:
-        results = ddgs.text(query + " latest", max_results=5)
+    search = DuckDuckGoSearchRun()
+    search_res = search.invoke(query)
+    # print(search_res)
+    return search_res
 
-        formatted_results = []
 
-        for r in results:
-            formatted_results.append(
-                f"Title: {r['title']}\n"
-                f"Snippet: {r['body']}\n"
-                f"Source: {r['href']}\n"
-            )
-
-        return "\n\n".join(formatted_results)
+# web_search("who won t20 worldcup 2026")
