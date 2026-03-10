@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_react_agent
+from langchain.agents import create_agent
 # If the above still fails in your specific environment version, use:
 # from langchain.agents.agent import AgentExecutor
-from langchain import hub
+# from langchainhub import hub
 from langchain_core.messages import HumanMessage, AIMessage
 from tools.weather import get_weather
 from tools.search import web_search
@@ -14,17 +14,18 @@ from tools.search import web_search
 # from tools import get_weather
 
 load_dotenv()
+# print(os.getenv("OPENAI_KEY"))
 
 # 1. Setup the LLM (OpenRouter)
 llm = ChatOpenAI(
-    model_name="openai/gpt-oss-120b", # Standard model name
+    model_name="openai/gpt-4o-mini", # Standard model name
     openai_api_key=os.getenv("OPENAI_KEY"),
     openai_api_base="https://openrouter.ai/api/v1",
     default_headers={
         "HTTP-Referer": "http://localhost:3000",
         "X-OpenRouter-Title": "My LangChain App",
     },
-    max_tokens=500,
+    # max_tokens=500,
     temperature=0.3
 )
 
@@ -37,32 +38,32 @@ tools = [get_weather,web_search]
 # It does NOT natively support 'chat_history'. 
 # Let's use a version that supports memory:
 # In model_config.py
-base_prompt = hub.pull("hwchase17/react-chat")
+# base_prompt = hub.pull("hwchase17/react-chat")
 # Add your custom Telegram instructions to the beginning
-prompt = base_prompt.partial(
-    instructions="""
-Give short answers.
+# prompt = base_prompt.partial(
+#     instructions="""
+# Give short answers.
 
-IMPORTANT:
-Do NOT use markdown in the reasoning steps.
-Use markdown ONLY in the final answer.
-Use the web_search tool whenever the question involves:
-- current events
-- sports results
-- news
-- recent information
-"""
-)
+# IMPORTANT:
+# Do NOT use markdown in the reasoning steps.
+# Use markdown ONLY in the final answer.
+# Use the web_search tool whenever the question involves:
+# - current events
+# - sports results
+# - news
+# - recent information
+# """
+# )
 
 # 3. Construct the Agent
-agent = create_react_agent(llm, tools, prompt)
-agent_executor = AgentExecutor(
-    agent=agent,
-    tools=tools,
-    verbose=True,
-    max_iterations=4,
-    # handle_parsing_errors="Check your format. Use EXACTLY: Thought, Action, Action Input."
-)
+agent = create_agent(llm, tools)
+# agent_executor = AgentExecutor(
+#     agent=agent,
+#     tools=tools,
+#     verbose=True,
+#     max_iterations=4,
+#     # handle_parsing_errors="Check your format. Use EXACTLY: Thought, Action, Action Input."
+# )
 
 # 4. Simple Memory Store (Dictionary)
 memory_store = {}
@@ -78,12 +79,15 @@ def get_model_response(user_text, chat_id):
     # 5. RUN THE AGENT
     # The agent_executor handles the 'get_prompt' logic internally.
     # We pass 'input' and 'chat_history' as required by the 'react-chat' prompt.
-    result = agent_executor.invoke({
-        "input": user_text,
-        "chat_history": history
-    })
+    # result = agent_executor.invoke({
+    #     "input": user_text,
+    #     "chat_history": history
+    # })
+    result = agent.invoke({
+    "messages": history + [HumanMessage(content=user_text)]
+})
 
-    final_answer = result["output"]
+    final_answer = result["messages"][-1].content
 
     # 6. Manually Update History
     # We store the interaction so the NEXT turn knows what happened.
@@ -93,4 +97,4 @@ def get_model_response(user_text, chat_id):
     return final_answer
 
 # Example Usage:
-# print(get_model_response("What is the weather in London?", "user_123"))
+# print(get_model_response("what is the weather of pune now", "user_123"))
