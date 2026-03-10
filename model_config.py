@@ -60,6 +60,7 @@ agent_executor = AgentExecutor(
     agent=agent,
     tools=tools,
     verbose=True,
+    max_iterations=4,
     handle_parsing_errors="Check your format. Use EXACTLY: Thought, Action, Action Input."
 )
 
