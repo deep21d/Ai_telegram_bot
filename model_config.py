@@ -16,13 +16,15 @@ load_dotenv()
 
 # 1. Setup the LLM (OpenRouter)
 llm = ChatOpenAI(
-    model_name="openai/gpt-4o", # Standard model name
+    model_name="openai/gpt-oss-120b", # Standard model name
     openai_api_key=os.getenv("OPENAI_KEY"),
     openai_api_base="https://openrouter.ai/api/v1",
     default_headers={
         "HTTP-Referer": "http://localhost:3000",
         "X-OpenRouter-Title": "My LangChain App",
-    }
+    },
+    max_tokens=500,
+    temperature=0.3
 )
 
 # 2. Tools and Prompt
