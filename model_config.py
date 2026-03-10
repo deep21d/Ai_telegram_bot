@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.agents import AgentExecutor, create_react_agent
+# If the above still fails in your specific environment version, use:
+# from langchain.agents.agent import AgentExecutor
 from langchain import hub
 from langchain_core.messages import HumanMessage, AIMessage
 from tools import get_weather

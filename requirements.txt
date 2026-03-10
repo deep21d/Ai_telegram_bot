@@ -1,5 +1,7 @@
 python-telegram-bot
-langchain
+langchain>=0.3.0
 langchain-community
-langchain_openai
+langchain-openai
 python-dotenv
+dotenv
+requests
