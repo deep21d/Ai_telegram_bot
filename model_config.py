@@ -14,7 +14,7 @@ from tools.search import web_search
 # from tools import get_weather
 
 load_dotenv()
-# print(os.getenv("OPENAI_KEY"))
+print(os.getenv("OPENAI_KEY"))
 
 # 1. Setup the LLM (OpenRouter)
 llm = ChatOpenAI(
@@ -96,5 +96,5 @@ def get_model_response(user_text, chat_id):
 
     return final_answer
 
-# Example Usage:
-# print(get_model_response("what is the weather of pune now", "user_123"))
+# # Example Usage:
+# print(get_model_response("who won t20 woldcup, jut tell me the name", "user_123"))

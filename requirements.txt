@@ -1,5 +1,5 @@
 python-telegram-bot
-langchain==0.2.16
+langchain
 langchain-community
 langchain-openai
 python-dotenv
