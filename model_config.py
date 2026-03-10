@@ -40,7 +40,16 @@ tools = [get_weather,web_search]
 base_prompt = hub.pull("hwchase17/react-chat")
 # Add your custom Telegram instructions to the beginning
 prompt = base_prompt.partial(
-    instructions="Give short, crisp answers (2–5 bullet points). Format for Telegram using Markdown."
+    instructions="""
+Give short answers.
+
+IMPORTANT:
+Use the web_search tool whenever the question involves:
+- current events
+- sports results
+- news
+- recent information
+"""
 )
 
 # 3. Construct the Agent
