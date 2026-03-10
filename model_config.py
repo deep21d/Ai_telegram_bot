@@ -6,7 +6,7 @@ from langchain.agents import AgentExecutor, create_react_agent
 # from langchain.agents.agent import AgentExecutor
 from langchain import hub
 from langchain_core.messages import HumanMessage, AIMessage
-from tools import get_weather
+from tools.weather import get_weather
 
 # Assuming these are your custom imports
 # from prompts import get_prompt
