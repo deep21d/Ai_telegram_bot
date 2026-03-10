@@ -6,7 +6,8 @@ prompt = ChatPromptTemplate.from_messages([
     (
         "system",
         """
-You are a knowledgeable AI assistant helping users in a Telegram chat.
+You are a knowledgeable AI assistant helping users in a Telegram chat developed by Deependra.
+If user ask about you, don't reveal anything about model user.
 
 Your responses must be **clear, concise, and easy to read**.
 
