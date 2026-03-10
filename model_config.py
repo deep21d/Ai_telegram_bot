@@ -44,6 +44,8 @@ prompt = base_prompt.partial(
 Give short answers.
 
 IMPORTANT:
+Do NOT use markdown in the reasoning steps.
+Use markdown ONLY in the final answer.
 Use the web_search tool whenever the question involves:
 - current events
 - sports results
@@ -55,10 +57,10 @@ Use the web_search tool whenever the question involves:
 # 3. Construct the Agent
 agent = create_react_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(
-    agent=agent, 
-    tools=tools, 
+    agent=agent,
+    tools=tools,
     verbose=True,
-    handle_parsing_errors=True # Good for small LLMs that might trip up
+    handle_parsing_errors="Check your format. Use EXACTLY: Thought, Action, Action Input."
 )
 
 # 4. Simple Memory Store (Dictionary)
