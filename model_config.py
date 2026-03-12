@@ -83,10 +83,15 @@ def get_model_response(user_text, chat_id):
     #     "input": user_text,
     #     "chat_history": history
     # })
-    result = agent.invoke({
+    input = {
     "messages": history + [HumanMessage(content=user_text)]
-})
+    }
+    result = agent.invoke(input)
 
+    for chunk in agent.stream(input, stream_mode="updates"):
+        print(chunk)
+    
+    
     final_answer = result["messages"][-1].content
 
     # 6. Manually Update History
