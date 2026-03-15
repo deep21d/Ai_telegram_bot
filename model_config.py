@@ -12,7 +12,7 @@ print(os.getenv("OPENAI_KEY"))
 
 # 1. Setup the LLM (OpenRouter)
 llm = ChatOpenAI(
-    model_name="openai/gpt-4o-mini", # Standard model name
+    model_name="openai/gpt-oss-120b:free", # Standard model name
     openai_api_key=os.getenv("OPENAI_KEY"),
     openai_api_base="https://openrouter.ai/api/v1",
     default_headers={
